@@ -35,9 +35,9 @@ Setelah `npx expo start` berjalan, scan QR code yang muncul menggunakan aplikasi
 ## SOAL 1: Merancang Layout Katalog & Analisis Responsivitas
 
 ### Gambar Bukti / Hasil Kode
-![Hasil Katalog](./assets/Bukti1.jpeg)
-![Hasil Katalog](./assets/Bukti2.jpeg)  
-![Hasil Katalog](./assets/Bukti3.jpeg)
+![Hasil Katalog](./assets/images/Bukti1.jpeg)
+![Hasil Katalog](./assets/images/Bukti2.jpeg)  
+![Hasil Katalog](./assets/images/Bukti3.jpeg)
 
 
 ### Analisis Responsivitas
@@ -52,7 +52,7 @@ Fragmentasi layar adalah tantangan utama di ekosistem mobile di mana terdapat ri
 ## SOAL 2: Route Protection (Middleware) & Analisis Keamanan Stateless
 
 ### Gambar Bukti / Hasil Kode
-![Halaman Login Otomatis](./assets/Bukti3.jpeg)
+![Halaman Login Otomatis](./assets/images/Bukti3.jpeg)
 
 *Keterangan: Halaman login di atas muncul secara otomatis saat aplikasi dijalankan (sebelum login). Ini membuktikan bahwa Middleware berhasil mendeteksi pengguna yang belum terautentikasi dan melakukan proteksi rute dengan mengalihkan akses dari halaman utama ke halaman login.*
 
