@@ -51,10 +51,9 @@ Fragmentasi layar adalah tantangan utama di ekosistem mobile di mana terdapat ri
 
 ## SOAL 2: Route Protection (Middleware) & Analisis Keamanan Stateless
 
-### Gambar Bukti / Hasil Kode
-![Halaman Login Otomatis](./assets/images/Bukti3.jpeg)
 
-*Keterangan: Halaman login di atas muncul secara otomatis saat aplikasi dijalankan (sebelum login). Ini membuktikan bahwa Middleware berhasil mendeteksi pengguna yang belum terautentikasi dan melakukan proteksi rute dengan mengalihkan akses dari halaman utama ke halaman login.*
+
+*Halaman login di atas muncul secara otomatis saat aplikasi dijalankan (sebelum login). Ini membuktikan bahwa Middleware berhasil mendeteksi pengguna yang belum terautentikasi dan melakukan proteksi rute dengan mengalihkan akses dari halaman utama ke halaman login.*
 
 ### Analisis Keamanan Stateless
 **Perbedaan antara *Stateful (Session-based)* dan *Stateless (JWT-based)*, serta alasan teknis mengapa metode Stateless lebih efisien untuk aplikasi mobile dengan jutaan pengguna:**
