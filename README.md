@@ -30,7 +30,13 @@ Setelah `npx expo start` berjalan, scan QR code yang muncul menggunakan aplikasi
 
 ---
 
+## ✨ Fitur Baru yang Ditambahkan
 
+- **Detail Pesanan Terproteksi**: Halaman detail pesanan yang hanya dapat diakses setelah login (menggunakan JWT Route Protection dari Supabase).
+- **Fitur Kamera**: Terintegrasi menggunakan `expo-camera` untuk mengambil foto bukti pengiriman pesanan.
+- **Fitur Maps (Peta)**: Terintegrasi menggunakan `react-native-maps` untuk menampilkan lokasi restoran dengan marker interaktif.
+
+---
 
 ## SOAL 1: Merancang Layout Katalog & Analisis Responsivitas
 
