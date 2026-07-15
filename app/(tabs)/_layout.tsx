@@ -31,15 +31,36 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="order_detail"
+        options={{
+          title: 'Pesanan',
+          tabBarIcon: ({ color }) => <TabBarIcon name="list-alt" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="camera"
+        options={{
+          title: 'Kamera',
+          tabBarIcon: ({ color }) => <TabBarIcon name="camera" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="maps"
+        options={{
+          title: 'Maps',
+          tabBarIcon: ({ color }) => <TabBarIcon name="map-marker" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
-          href: null, // Sembunyikan tab bawaan, yang dipakai hanya katalog
+          href: null, 
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          href: null, // Sembunyikan tab bawaan
+          href: null, 
         }}
       />
     </Tabs>
