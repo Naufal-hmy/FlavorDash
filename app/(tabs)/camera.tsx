@@ -48,7 +48,13 @@ export default function CameraScreen() {
           <TouchableOpacity style={styles.button} onPress={retakePicture}>
             <Text style={styles.buttonText}>Ambil Ulang</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.primaryButton]}>
+          <TouchableOpacity 
+            style={[styles.button, styles.primaryButton]}
+            onPress={() => {
+              alert('Berhasil! Bukti foto telah terkirim.');
+              setPhoto(null);
+            }}
+          >
             <Text style={[styles.buttonText, { color: '#fff' }]}>Kirim Bukti</Text>
           </TouchableOpacity>
         </View>

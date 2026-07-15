@@ -1,10 +1,17 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 const FoodItem = ({ imageUrl, title, description, price }) => {
+  const handlePress = () => {
+    Alert.alert(
+      'Pesanan Ditambahkan',
+      `${title} berhasil ditambahkan ke pesanan Anda.`
+    );
+  };
+
   return (
-    // Nested View: Container Utama
-    <View style={styles.cardContainer}>
+    // Menggunakan TouchableOpacity agar merespon saat diklik
+    <TouchableOpacity style={styles.cardContainer} onPress={handlePress} activeOpacity={0.8}>
       
       {/* View untuk Gambar */}
       <Image 
@@ -20,7 +27,7 @@ const FoodItem = ({ imageUrl, title, description, price }) => {
         <Text style={styles.price}>{price}</Text>
       </View>
 
-    </View>
+    </TouchableOpacity>
   );
 };
 

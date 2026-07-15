@@ -1,6 +1,7 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 export default function MapsScreen() {
   // Koordinat lokasi restoran (contoh: Monas, Jakarta sebagai dummy)
@@ -10,6 +11,28 @@ export default function MapsScreen() {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Izin Lokasi Ditolak',
+          'Tolong aktifkan layanan lokasi di pengaturan perangkat Anda agar peta dapat menampilkan lokasi Anda dengan baik.'
+        );
+        return;
+      }
+      
+      // Cek apakah location services menyala (GPS on)
+      const providerStatus = await Location.getProviderStatusAsync();
+      if (!providerStatus.locationServicesEnabled) {
+        Alert.alert(
+          'GPS Mati',
+          'Lokasi perangkat Anda (GPS) sedang mati. Mohon nyalakan lokasi Anda agar peta berfungsi maksimal.'
+        );
+      }
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -21,6 +44,8 @@ export default function MapsScreen() {
       <MapView
         style={styles.map}
         initialRegion={restaurantLocation}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
       >
         <Marker
           coordinate={{
