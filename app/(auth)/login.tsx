@@ -10,9 +10,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { supabase } from '../../lib/supabase';
 
 export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -47,8 +49,10 @@ export default function LoginScreen() {
     setLoading(false);
     if (error) {
       Alert.alert('Login Gagal', parseError(error.message));
+    } else {
+      // Manual redirect jika middleware onAuthStateChange lambat merespon
+      router.replace('/(tabs)/katalog');
     }
-    // Jika sukses, onAuthStateChange di _layout.tsx akan otomatis redirect ke /(tabs)/katalog
   };
 
   const handleRegister = async () => {
@@ -66,13 +70,13 @@ export default function LoginScreen() {
     if (error) {
       Alert.alert('Registrasi Gagal', parseError(error.message));
     } else if (data.user && data.session === null) {
-      // Supabase kirim email konfirmasi (fitur aktif)
       Alert.alert(
         'Cek Email Kamu! 📧',
         `Link konfirmasi telah dikirim ke ${email}. Klik link tersebut untuk mengaktifkan akun, lalu login di sini.`
       );
     } else {
-      Alert.alert('Sukses! 🎉', 'Akun berhasil dibuat! Kamu sudah bisa masuk.');
+      Alert.alert('Sukses! 🎉', 'Akun berhasil dibuat! Mengalihkan ke menu utama...');
+      router.replace('/(tabs)/katalog');
     }
   };
 
