@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useOrder } from '../../context/OrderContext';
 
 export default function CameraScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const [photo, setPhoto] = useState<string | null>(null);
   const cameraRef = useRef<CameraView>(null);
+  const { setOrderStatus } = useOrder();
 
   if (!permission) {
     return <View style={styles.container} />;
@@ -52,6 +54,7 @@ export default function CameraScreen() {
             style={[styles.button, styles.primaryButton]}
             onPress={() => {
               alert('Berhasil! Bukti foto telah terkirim.');
+              setOrderStatus('Pesanan Selesai / Terverifikasi ✅');
               setPhoto(null);
             }}
           >

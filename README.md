@@ -31,3 +31,15 @@ Penggunaan unit proporsional (`flex: 1` atau persentase) lebih disarankan daripa
 ### Stateful vs Stateless Authentication (JWT)
 - **Stateful (Session-based):** Membebani server karena server harus mencatat status *online* dan mencari *Session ID* tiap pengguna di dalam database atau memori (RAM), sehingga penskalaan sistem menjadi lambat dan mahal.
 - **Stateless (JWT-based):** Pilihan terbaik untuk aplikasi *mobile* modern. Token kredensial diserahkan secara utuh ke perangkat pengguna, sehingga server sama sekali tidak menyimpan status sesi. Server hanya perlu "memvalidasi tanda tangan kriptografi" (*signature*) token ketika ada permintaan masuk, menjadikannya sangat efisien, instan, dan mampu melayani jutaan request secara paralel.
+
+---
+
+## 🚀 Ekspektasi Masa Depan (Future Work)
+
+Aplikasi ini untuk sementara dirancang dengan menggabungkan fitur **Customer** (Katalog & Detail Pesanan) dan **Driver** (Kamera Bukti Pengiriman) dalam satu antarmuka sebagai *Proof of Concept* (PoC) penguasaan API React Native. Untuk pengembangan jangka panjang (misalnya Proyek Akhir/UAS), sistem direkomendasikan untuk dirombak menjadi arsitektur **Multi-Role** menggunakan backend Supabase:
+
+1. **Role Customer:** Dapat menjelajahi katalog, melakukan *checkout* pesanan, memantau status pesanan (Verifikasi -> Dimasak -> Diantar), dan melihat pergerakan kurir di peta.
+2. **Role Driver:** Menerima *order*, mendapat rute ke lokasi pengiriman via peta, dan mengunggah foto bukti penerimaan pesanan. Mengunggah bukti foto ini akan memicu *trigger* ke database sehingga status pesanan Customer otomatis berubah menjadi **Selesai**.
+3. **Role Admin (Restoran):** Menerima orderan masuk dari sistem, mengelola daftar katalog makanan (*create, update, delete*), dan mengatur penugasan kurir.
+
+Pemisahan hak akses ini akan dilindungi menggunakan *Role-Based Access Control* (RBAC) pada JWT Supabase untuk menjamin keutuhan dan keamanan logika bisnis aplikasi yang sesungguhnya.

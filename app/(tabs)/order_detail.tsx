@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useOrder } from '../../context/OrderContext';
 
 export default function OrderDetailScreen() {
+  const { orderStatus } = useOrder();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -11,7 +14,7 @@ export default function OrderDetailScreen() {
 
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Status Pesanan</Text>
-        <Text style={styles.statusText}>Sedang Diantar 🛵</Text>
+        <Text style={styles.statusText}>{orderStatus}</Text>
       </View>
 
       <View style={styles.card}>
