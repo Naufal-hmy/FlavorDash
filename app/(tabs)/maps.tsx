@@ -4,32 +4,24 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 export default function MapsScreen() {
-  // Koordinat lokasi restoran (contoh: Monas, Jakarta sebagai dummy)
-  const restaurantLocation = {
-    latitude: -6.175392,
-    longitude: 106.827153,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
+  const restaurants = [
+    { id: '1', title: 'FlavorDash Jakarta', lat: -6.175392, lon: 106.827153, desc: 'Pusat Jakarta' },
+    { id: '2', title: 'FlavorDash Bandung', lat: -6.914744, lon: 107.609810, desc: 'Cabang Bandung' },
+    { id: '3', title: 'FlavorDash Surabaya', lat: -7.250445, lon: 112.768845, desc: 'Cabang Surabaya' },
+    { id: '4', title: 'FlavorDash Bali', lat: -8.409518, lon: 115.188919, desc: 'Cabang Bali' },
+  ];
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        Alert.alert(
-          'Izin Lokasi Ditolak',
-          'Tolong aktifkan layanan lokasi di pengaturan perangkat Anda agar peta dapat menampilkan lokasi Anda dengan baik.'
-        );
+        Alert.alert('Izin Lokasi Ditolak', 'Tolong aktifkan layanan lokasi.');
         return;
       }
       
-      // Cek apakah location services menyala (GPS on)
       const providerStatus = await Location.getProviderStatusAsync();
       if (!providerStatus.locationServicesEnabled) {
-        Alert.alert(
-          'GPS Mati',
-          'Lokasi perangkat Anda (GPS) sedang mati. Mohon nyalakan lokasi Anda agar peta berfungsi maksimal.'
-        );
+        Alert.alert('GPS Mati', 'Lokasi perangkat Anda (GPS) sedang mati.');
       }
     })();
   }, []);
@@ -38,23 +30,28 @@ export default function MapsScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Lokasi Restoran</Text>
-        <Text style={styles.headerSubtitle}>Temukan lokasi FlavorDash terdekat</Text>
+        <Text style={styles.headerSubtitle}>Temukan lokasi FlavorDash di Indonesia</Text>
       </View>
       
       <MapView
         style={styles.map}
-        initialRegion={restaurantLocation}
+        initialRegion={{
+          latitude: -4.0, // Center of Indonesia roughly
+          longitude: 112.0,
+          latitudeDelta: 20.0,
+          longitudeDelta: 20.0,
+        }}
         showsUserLocation={true}
         showsMyLocationButton={true}
       >
-        <Marker
-          coordinate={{
-            latitude: restaurantLocation.latitude,
-            longitude: restaurantLocation.longitude,
-          }}
-          title="FlavorDash Central"
-          description="Pusat pengiriman pesanan Anda"
-        />
+        {restaurants.map(res => (
+          <Marker
+            key={res.id}
+            coordinate={{ latitude: res.lat, longitude: res.lon }}
+            title={res.title}
+            description={res.desc}
+          />
+        ))}
       </MapView>
     </View>
   );

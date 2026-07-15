@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useOrder } from '../../context/OrderContext';
 
 export default function OrderDetailScreen() {
   const router = useRouter();
-  const { orderStatus, cart, updateQty, confirmOrder, proofPhoto } = useOrder();
+  const { orderStatus, cart, updateQty, confirmOrder, proofPhoto, deliveryAddress, setDeliveryAddress, finishOrder } = useOrder();
 
   const totalPayment = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
 
@@ -62,18 +62,36 @@ export default function OrderDetailScreen() {
         </View>
       )}
 
-      {cart.length > 0 && orderStatus === 'Belum Ada Pesanan' && (
-        <TouchableOpacity style={styles.confirmButton} onPress={confirmOrder}>
-          <Text style={styles.confirmButtonText}>Konfirmasi Pesanan</Text>
-        </TouchableOpacity>
+      {cart.length > 0 && (
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Alamat Pengiriman</Text>
+          {orderStatus === 'Belum Ada Pesanan' ? (
+            <TextInput
+              style={styles.addressInput}
+              placeholder="Ketik alamat lengkap Anda di sini..."
+              value={deliveryAddress}
+              onChangeText={setDeliveryAddress}
+              multiline
+            />
+          ) : (
+            <Text style={styles.infoText}>{deliveryAddress || 'Alamat tidak diisi'}</Text>
+          )}
+          {orderStatus !== 'Belum Ada Pesanan' && (
+            <Text style={styles.infoText}>Estimasi Waktu: 15-20 Menit</Text>
+          )}
+        </View>
       )}
 
-      {cart.length > 0 && orderStatus !== 'Belum Ada Pesanan' && (
-        <View style={styles.card}>
-          <Text style={styles.sectionTitle}>Informasi Pengiriman</Text>
-          <Text style={styles.infoText}>Alamat: Jl. Sudirman No. 123, Jakarta</Text>
-          <Text style={styles.infoText}>Estimasi Waktu: 15-20 Menit</Text>
-        </View>
+      {cart.length > 0 && orderStatus === 'Belum Ada Pesanan' && (
+        <TouchableOpacity 
+          style={[styles.confirmButton, !deliveryAddress.trim() && { opacity: 0.5 }]} 
+          onPress={confirmOrder}
+          disabled={!deliveryAddress.trim()}
+        >
+          <Text style={styles.confirmButtonText}>
+            {deliveryAddress.trim() ? 'Konfirmasi Pesanan' : 'Isi Alamat Dahulu'}
+          </Text>
+        </TouchableOpacity>
       )}
 
       {orderStatus === 'Sedang Diantar 🛵' && (
@@ -90,6 +108,15 @@ export default function OrderDetailScreen() {
           <Text style={styles.sectionTitle}>Bukti Penerimaan</Text>
           <Image source={{ uri: proofPhoto }} style={styles.proofImage} resizeMode="cover" />
         </View>
+      )}
+
+      {orderStatus.includes('Selesai') && (
+        <TouchableOpacity 
+          style={[styles.confirmButton, { backgroundColor: '#2a9d8f', marginTop: 20 }]} 
+          onPress={finishOrder}
+        >
+          <Text style={styles.confirmButtonText}>Selesaikan & Pesan Lagi</Text>
+        </TouchableOpacity>
       )}
       
       <View style={{ height: 40 }} />
@@ -194,6 +221,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
     marginBottom: 6,
+  },
+  addressInput: {
+    borderWidth: 1,
+    borderColor: '#CCC',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 14,
+    minHeight: 80,
+    textAlignVertical: 'top',
+    backgroundColor: '#FAFAFA',
+    marginBottom: 8,
   },
   emptyCartContainer: {
     padding: 40,
