@@ -1,32 +1,38 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { useOrder } from '../context/OrderContext';
 
-const FoodItem = ({ imageUrl, title, description, price }) => {
+// Sekarang menerima parameter item seutuhnya
+const FoodItem = ({ item }) => {
+  const { addToCart } = useOrder();
+
   const handlePress = () => {
+    // Menambahkan item ke keranjang global
+    addToCart({
+      id: item.id,
+      name: item.title,
+      price: parseInt(item.price.replace(/[^0-9]/g, ''), 10), // Konversi "Rp 25.000" jadi 25000
+    });
+    
     Alert.alert(
       'Pesanan Ditambahkan',
-      `${title} berhasil ditambahkan ke pesanan Anda.`
+      `${item.title} berhasil ditambahkan ke keranjang Anda.`
     );
   };
 
   return (
-    // Menggunakan TouchableOpacity agar merespon saat diklik
     <TouchableOpacity style={styles.cardContainer} onPress={handlePress} activeOpacity={0.8}>
-      
-      {/* View untuk Gambar */}
       <Image 
-        source={{ uri: imageUrl }} 
+        source={{ uri: item.imageUrl }} 
         style={styles.productImage} 
         resizeMode="cover"
       />
       
-      {/* Nested View: Container untuk Teks (Deskripsi) */}
       <View style={styles.textContainer}>
-        <Text style={styles.title} numberOfLines={1}>{title}</Text>
-        <Text style={styles.description} numberOfLines={2}>{description}</Text>
-        <Text style={styles.price}>{price}</Text>
+        <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
+        <Text style={styles.description} numberOfLines={2}>{item.description}</Text>
+        <Text style={styles.price}>{item.price}</Text>
       </View>
-
     </TouchableOpacity>
   );
 };

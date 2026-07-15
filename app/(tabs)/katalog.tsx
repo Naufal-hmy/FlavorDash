@@ -125,12 +125,7 @@ export default function KatalogScreen() {
         data={foods}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <FoodItem
-            imageUrl={item.imageUrl}
-            title={item.title}
-            description={item.description}
-            price={item.price}
-          />
+          <FoodItem item={item} />
         )}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}

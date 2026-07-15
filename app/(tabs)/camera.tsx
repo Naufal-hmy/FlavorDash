@@ -1,13 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Button } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useRouter } from 'expo-router';
 import { useOrder } from '../../context/OrderContext';
 
 export default function CameraScreen() {
   const [permission, requestPermission] = useCameraPermissions();
   const [photo, setPhoto] = useState<string | null>(null);
   const cameraRef = useRef<CameraView>(null);
-  const { setOrderStatus } = useOrder();
+  const { setOrderStatus, setProofPhoto } = useOrder();
+  const router = useRouter();
 
   if (!permission) {
     return <View style={styles.container} />;
@@ -53,9 +55,11 @@ export default function CameraScreen() {
           <TouchableOpacity 
             style={[styles.button, styles.primaryButton]}
             onPress={() => {
-              alert('Berhasil! Bukti foto telah terkirim.');
-              setOrderStatus('Pesanan Selesai / Terverifikasi ✅');
+              setProofPhoto(photo);
+              setOrderStatus('Pesanan Selesai ✅');
               setPhoto(null);
+              alert('Berhasil! Bukti foto telah terkirim.');
+              router.replace('/(tabs)/order_detail');
             }}
           >
             <Text style={[styles.buttonText, { color: '#fff' }]}>Kirim Bukti</Text>
