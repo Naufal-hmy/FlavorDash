@@ -7,6 +7,7 @@ FlavorDash adalah aplikasi *mobile* pengiriman makanan interaktif yang memungkin
 - **Bahasa Pemrograman**: JavaScript / TypeScript
 - **Framework Mobile**: React Native (berbasis Expo Go & Expo Router)
 - **Database & Autentikasi API**: Supabase (Backend-as-a-Service berbasis PostgreSQL) untuk implementasi JWT *Stateless Authentication*.
+  - Akses Database: `DATABASE_URL="postgresql://postgres.qciatabsdkciojgsnnll:[YOUR-PASSWORD]@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"`
 - **AI Recommendation**: Penggunaan AI Agent (Antigravity / Cursor) untuk *code generation*, penyusunan alur aplikasi, dan refactoring layout *responsive*.
 
 ## 🔄 Flow Aplikasi (Garis Besar)
